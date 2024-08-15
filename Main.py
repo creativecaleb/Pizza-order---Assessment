@@ -37,6 +37,11 @@ def order():
         address.destroy()
         pizza_order()
 
+
+    def no_delivery():
+        address.destroy
+        pizza_order()
+
     global customer_name
     customer_name=askstring('Name input', 'Customer name\t\t\t\t\t')
     
@@ -63,7 +68,7 @@ def order():
     enter_button.config(height=2, width=25)
 
     quit_button=Button(bottomaddressFrame, text='No delivery', 
-                       font=('Open Sans', 15), command=address.destroy)
+                       font=('Open Sans', 15), command=no_delivery)
     quit_button.pack(side=BOTTOM, pady=10, padx=30)
     quit_button.config(height=2, width=25)
 
