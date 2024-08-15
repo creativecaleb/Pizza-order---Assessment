@@ -21,9 +21,9 @@ root.iconbitmap(default='assets/images/pizza_icon.ico')
 
 def pizza_cost(var):
     if var in cheap_pizza:
-        return '$10.50'
+        return 10.50
     elif var in premium_pizza:
-        return '$15.50'
+        return 15.50
     else:
         return 'Error, redo order'
 
@@ -31,7 +31,9 @@ def pizza_cost(var):
 def order():
     def take_address():
         global delivery_address
+        global delivery
         delivery_address=address_input.get(1.0, 'end-1c')
+        delivery=True
         address.destroy()
         pizza_order()
 
@@ -158,13 +160,13 @@ def return_order():
         order_details.destroy()
 
     order_details=tk.Tk() #Root addressess widget
-    order_details.geometry('700x300')
+    order_details.geometry('600x700')
     order_details.title('Order details')
     order_details.iconbitmap('assets/images/pizza_icon.ico')
     window=tk.Frame(order_details)
     window.grid()
 
-    top_text=Label(window, text='Order Details:',
+    top_text=Label(window, text='Customer Name:',
                     font=('Open Sans', 25))
     top_text.grid(pady=5, padx=15, row=0, column=0)
 
@@ -203,23 +205,36 @@ def return_order():
 
     for pizza in range(0,5):
         global total_cost
-        top_text=Label(window, font=('Open Sans', 25),
-                       text=
-                       f'Pizza {pizza+1} {pizza_selections[pizza]}:')
-        top_text.grid(pady=5, padx=15, row=4+pizza, column=0)
+        if pizza_selections[pizza] != 'None':
+            top_text=Label(window, font=('Open Sans', 25),
+                        text=
+                        f'Pizza {pizza+1} {pizza_selections[pizza]}:')
+            top_text.grid(pady=5, padx=15, row=4+pizza, column=0)
 
-        top_text=Label(window, font=('Open Sans', 25),
-                       text=pizza_cost(pizza_selections[pizza]))
-        top_text.grid(pady=5, padx=15, row=4+pizza, column=1)
-        try:
-            total_cost+=int(pizza_cost(pizza_selections[pizza]))
-        except:
-            print('No pizza selected')
+            top_text=Label(window, font=('Open Sans', 25),
+                        text=f'${pizza_cost(pizza_selections[pizza])}')
+            top_text.grid(pady=5, padx=15, row=4+pizza, column=1)
+            try:
+                print(pizza_cost(pizza_selections[pizza]))
+                total_cost+=pizza_cost(pizza_selections[pizza])
+            except:
+                print('No pizza selected')
+
+    if delivery == True:
+        total_cost+=3
+
+    top_text=Label(window, text='Total Cost:',
+                    font=('Open Sans', 25))
+    top_text.grid(pady=5, padx=15, row=9, column=0)
+
+    top_text=Label(window, text=f'${total_cost}',
+                    font=('Open Sans', 25))
+    top_text.grid(pady=5, padx=15, row=9, column=1)
     
     exit_button=tk.Button(order_details, text='Close order',
                            font=('Open Sans', 15),
                            command=reset)
-    exit_button.grid(row=5, column=0, pady=10, padx=30)
+    exit_button.grid(row=10, column=0, pady=10, padx=30)
     exit_button.config(height=2, width=25)
 
 
