@@ -7,12 +7,12 @@ delivery=False
 delivery_address=''
 pizza_selections=[]
 total_cost=0
-cheap_pizza=['Margherita', 'Marinara', 'Prosciutto', 'Hawaiian',
+CHEAP_PIZZA=['Margherita', 'Marinara', 'Prosciutto', 'Hawaiian',
               'Popeye','Pepperoni', 'Meat Lovers']
-premium_pizza=['Godfather', 'Parmigiana', 'M.O.B.']
+PREMIUM_PIZZA=['Godfather', 'Parmigiana', 'M.O.B.']
 pizza_types=[]
-pizza_types.extend(cheap_pizza)
-pizza_types.extend(premium_pizza)
+pizza_types.extend(CHEAP_PIZZA)
+pizza_types.extend(PREMIUM_PIZZA)
 pizza_types.append('None')
 root=tk.Tk() #Root widget
 root.geometry('520x300')
@@ -236,9 +236,9 @@ def return_order():
 
 
 def pizza_cost(var):
-    if var in cheap_pizza:
+    if var in CHEAP_PIZZA:
         return 10.50
-    elif var in premium_pizza:
+    elif var in PREMIUM_PIZZA:
         return 15.50
     else:
         return 'Error, redo order'
