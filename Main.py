@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter.simpledialog import askinteger, askstring
+from tkinter.simpledialog import askstring
 from tkinter import *
 
 customer_name=''
@@ -11,21 +11,12 @@ cheap_pizza=['Margherita', 'Marinara', 'Prosciutto', 'Hawaiian',
               'Popeye','Pepperoni', 'Meat Lovers', 'None']
 premium_pizza=['Godfather', 'Parmigiana', 'M.O.B.']
 pizza_types=['Margherita', 'Marinara', 'Prosciutto', 'Hawaiian',
-              'Popeye','Pepperoni', 'Meat Lovers', 'None',
-              'Godfather', 'Parmigiana', 'M.O.B.']
+              'Popeye','Pepperoni', 'Meat Lovers', 'Godfather',
+              'Parmigiana', 'M.O.B.',  'None']
 root=tk.Tk() #Root widget
 root.geometry('520x300')
 root.title('Pizza Order')
 root.iconbitmap(default='assets/images/pizza_icon.ico')
-
-
-def pizza_cost(var):
-    if var in cheap_pizza:
-        return 10.50
-    elif var in premium_pizza:
-        return 15.50
-    else:
-        return 'Error, redo order'
 
 
 def order():
@@ -52,9 +43,9 @@ def order():
     window=tk.Frame(address)
     window.pack()
 
-    top_text=Label(window, text='Delivery address:',
+    text=Label(window, text='Delivery address:',
                     font=('Open Sans', 25))
-    top_text.pack(side=TOP, pady=10)
+    text.pack(side=TOP, pady=10)
 
     address_input=tk.Text(window, height=1, width=25)
     address_input.pack(side=TOP, pady=10)
@@ -171,54 +162,54 @@ def return_order():
     window=tk.Frame(order_details)
     window.grid()
 
-    top_text=Label(window, text='Customer Name:',
+    text=Label(window, text='Customer Name:',
                     font=('Open Sans', 25))
-    top_text.grid(pady=5, padx=15, row=0, column=0)
+    text.grid(pady=5, padx=15, row=0, column=0)
 
-    top_text=Label(window, text=customer_name,
+    text=Label(window, text=customer_name,
                     font=('Open Sans', 25))
-    top_text.grid(pady=5, padx=15, row=0, column=1)
+    text.grid(pady=5, padx=15, row=0, column=1)
     
     if delivery==True:
-        top_text=Label(window, text='Delivery Cost:',
+        text=Label(window, text='Delivery Cost:',
                         font=('Open Sans', 25))
-        top_text.grid(pady=5, padx=15, row=1, column=0)
+        text.grid(pady=5, padx=15, row=1, column=0)
 
-        top_text=Label(window, text='$3.00',
+        text=Label(window, text='$3.00',
                         font=('Open Sans', 25))
-        top_text.grid(pady=5, padx=15, row=1, column=1)
+        text.grid(pady=5, padx=15, row=1, column=1)
     
-        top_text=Label(window, text='Delivery Address:',
+        text=Label(window, text='Delivery Address:',
                         font=('Open Sans', 25))
-        top_text.grid(pady=5, padx=15, row=2, column=0)
+        text.grid(pady=5, padx=15, row=2, column=0)
 
-        top_text=Label(window, text=delivery_address,
+        text=Label(window, text=delivery_address,
                         font=('Open Sans', 25))
-        top_text.grid(pady=5, padx=15, row=2, column=1)
+        text.grid(pady=5, padx=15, row=2, column=1)
     else:
-        top_text=Label(window, text='Pickup in store',
+        text=Label(window, text='Pickup in store',
                         font=('Open Sans', 25))
-        top_text.grid(pady=5, padx=15, row=1, column=0)
+        text.grid(pady=5, padx=15, row=1, column=0)
     
-    top_text=Label(window, text='Pizzas Ordered:',
+    text=Label(window, text='Pizzas Ordered:',
                     font=('Open Sans', 25))
-    top_text.grid(pady=5, padx=15, row=3, column=0)
+    text.grid(pady=5, padx=15, row=3, column=0)
 
-    top_text=Label(window, text='Cost:',
+    text=Label(window, text='Cost:',
                     font=('Open Sans', 25))
-    top_text.grid(pady=5, padx=15, row=3, column=1)
+    text.grid(pady=5, padx=15, row=3, column=1)
 
     for pizza in range(0,5):
         global total_cost
         if pizza_selections[pizza] != 'None':
-            top_text=Label(window, font=('Open Sans', 25),
+            text=Label(window, font=('Open Sans', 25),
                         text=
                         f'Pizza {pizza+1} {pizza_selections[pizza]}:')
-            top_text.grid(pady=5, padx=15, row=4+pizza, column=0)
+            text.grid(pady=5, padx=15, row=4+pizza, column=0)
 
-            top_text=Label(window, font=('Open Sans', 25),
+            text=Label(window, font=('Open Sans', 25),
                         text=f'${pizza_cost(pizza_selections[pizza])}')
-            top_text.grid(pady=5, padx=15, row=4+pizza, column=1)
+            text.grid(pady=5, padx=15, row=4+pizza, column=1)
             try:
                 print(pizza_cost(pizza_selections[pizza]))
                 total_cost+=pizza_cost(pizza_selections[pizza])
@@ -228,13 +219,13 @@ def return_order():
     if delivery == True:
         total_cost+=3
 
-    top_text=Label(window, text='Total Cost:',
+    text=Label(window, text='Total Cost:',
                     font=('Open Sans', 25))
-    top_text.grid(pady=5, padx=15, row=9, column=0)
+    text.grid(pady=5, padx=15, row=9, column=0)
 
-    top_text=Label(window, text=f'${total_cost}',
+    text=Label(window, text=f'${total_cost}',
                     font=('Open Sans', 25))
-    top_text.grid(pady=5, padx=15, row=9, column=1)
+    text.grid(pady=5, padx=15, row=9, column=1)
     
     exit_button=tk.Button(order_details, text='Close order',
                            font=('Open Sans', 15),
@@ -243,7 +234,13 @@ def return_order():
     exit_button.config(height=2, width=25)
 
 
-
+def pizza_cost(var):
+    if var in cheap_pizza:
+        return 10.50
+    elif var in premium_pizza:
+        return 15.50
+    else:
+        return 'Error, redo order'
 
 
 
@@ -253,9 +250,9 @@ frame.pack()
 bottom_frame=Frame(root)
 bottom_frame.pack(side=BOTTOM)
 
-top_text=Label(frame, text='Pizza Order Program', 
+text=Label(frame, text='Pizza Order Program', 
                font=('Open Sans', 25))
-top_text.pack(side=TOP, pady=30)
+text.pack(side=TOP, pady=30)
 
 quit_button=Button(bottom_frame, text='Quit', font=('Open Sans', 15),
                      command=root.destroy)
@@ -268,5 +265,3 @@ order_button.config( height=2, width=10 )
 order_button.pack(side=LEFT, pady=30, padx=30)
 
 root.mainloop()
-
-
