@@ -8,11 +8,12 @@ delivery_address=''
 pizza_selections=[]
 total_cost=0
 cheap_pizza=['Margherita', 'Marinara', 'Prosciutto', 'Hawaiian',
-              'Popeye','Pepperoni', 'Meat Lovers', 'None']
+              'Popeye','Pepperoni', 'Meat Lovers']
 premium_pizza=['Godfather', 'Parmigiana', 'M.O.B.']
-pizza_types=['Margherita', 'Marinara', 'Prosciutto', 'Hawaiian',
-              'Popeye','Pepperoni', 'Meat Lovers', 'Godfather',
-              'Parmigiana', 'M.O.B.',  'None']
+pizza_types=[]
+pizza_types.extend(cheap_pizza)
+pizza_types.extend(premium_pizza)
+pizza_types.append('None')
 root=tk.Tk() #Root widget
 root.geometry('520x300')
 root.title('Pizza Order')
