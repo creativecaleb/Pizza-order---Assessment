@@ -25,7 +25,10 @@ def order():
         global delivery_address
         global delivery
         delivery_address=address_input.get(1.0, 'end-1c')
-        delivery=True
+        if delivery_address=='':
+            delivery=False
+        else:
+            delivery=True
         address.destroy()
         pizza_order()
 
