@@ -4,6 +4,7 @@ from tkinter import *
 
 customer_name=''
 delivery=False
+DELIVERY_COST='3.00'
 delivery_address=''
 pizza_selections=[]
 total_cost=0
@@ -19,8 +20,11 @@ root.geometry('520x300')
 root.title('Pizza Order')
 root.iconbitmap(default='assets/images/pizza_icon.ico')
 
-
+# Initial order function. It takes the customer's name, checks if they want
+# delivery and if they do, uses another function to take their address.
 def order():
+    # Local function to take the customer's address and open the next 
+    # window when done
     def take_address():
         global delivery_address
         global delivery
@@ -32,13 +36,17 @@ def order():
         address.destroy()
         pizza_order()
 
-
+    # Local function to open the next window when done
     def no_delivery():
-        address.destroy
+        address.destroy()
         pizza_order()
 
     global customer_name
-    customer_name=askstring('Name input', 'Customer name\t\t\t\t\t')
+    while customer_name == '':
+        customer_name=askstring('Name input', 'Customer name\t\t\t\t\t')
+        if customer_name == None:
+            reset(None)
+            return
     
     address=tk.Tk() #Root addressess widget
     address.geometry('520x300')
@@ -69,6 +77,8 @@ def order():
 
 
 def pizza_order():
+    # Local function to save the pizza selections and open the next
+    # window when done
     def save_order():
         pizza_selections.append(selection1.get())
         pizza_selections.append(selection2.get())
@@ -145,19 +155,13 @@ def pizza_order():
     
 
 def return_order():
-    def reset():
-        global customer_name
-        global delivery
-        global delivery_address
-        global pizza_selections
-        global total_cost
-        customer_name=''
-        delivery=False
-        delivery_address=''
-        pizza_selections=[]
-        total_cost=0
+    # Local function to save order to text file open the next window when done
+    def save_and_reset():
+        f = open('order_receipts.txt', 'a') 
+        f.write(f'Customer Name: {customer_name}\n')
+        f.write(f'\n')
+        reset(order_details)
 
-        order_details.destroy()
 
     order_details=tk.Tk() #Root addressess widget
     order_details.geometry('600x700')
@@ -179,7 +183,7 @@ def return_order():
                         font=('Open Sans', 25))
         text.grid(pady=5, padx=15, row=1, column=0)
 
-        text=Label(window, text='$3.00',
+        text=Label(window, text=f'${DELIVERY_COST}',
                         font=('Open Sans', 25))
         text.grid(pady=5, padx=15, row=1, column=1)
     
@@ -231,13 +235,19 @@ def return_order():
                     font=('Open Sans', 25))
     text.grid(pady=5, padx=15, row=9, column=1)
     
-    exit_button=tk.Button(order_details, text='Close order',
+    save_exit_button=Button(order_details, text='Close order',
                            font=('Open Sans', 15),
-                           command=reset)
-    exit_button.grid(row=10, column=0, pady=10, padx=30)
-    exit_button.config(height=2, width=25)
+                           command=save_and_reset)
+    save_exit_button.grid(row=10, column=0, pady=10, padx=30)
+    save_exit_button.config(height=2, width=25)
 
+    cancel_exit_button=Button(order_details, text='Cancel order',
+                           font=('Open Sans', 15),
+                           command=reset(order_details))
+    cancel_exit_button.grid(row=10, column=0, pady=10, padx=30)
+    cancel_exit_button.config(height=2, width=25)
 
+# Function to check which list a pizza is in and return a cost
 def pizza_cost(var):
     if var in CHEAP_PIZZA:
         return 10.50
@@ -246,6 +256,20 @@ def pizza_cost(var):
     else:
         return 'Error, redo order'
 
+def reset(var):
+        global customer_name
+        global delivery
+        global delivery_address
+        global pizza_selections
+        global total_cost
+        customer_name=''
+        delivery=False
+        delivery_address=''
+        pizza_selections=[]
+        total_cost=0
+
+        if var != None:
+            var.destroy()
 
 
 frame=Frame(root)
