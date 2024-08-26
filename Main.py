@@ -159,7 +159,17 @@ def return_order():
     def save_and_reset():
         f = open('order_receipts.txt', 'a') 
         f.write(f'Customer Name: {customer_name}\n')
-        f.write(f'\n')
+        if delivery == True:
+            f.write(f'Delivery cost: $3\n')
+            f.write(f'Delivery address: {delivery_address}\n')
+        else:
+            f.write(f'Pickup in store\n')
+        f.write(f'Pizzas Ordered:\n')
+        for pizza in range(0, len(pizza_selections)):
+            if pizza != None:
+                f.write(f'''Pizza {pizza+1}: {pizza_selections[pizza]}, 
+Cost = ${pizza_cost(pizza_selections[pizza])}\n''')
+        f.write(f'Total cost: ${total_cost}\n')
         reset(order_details)
 
 
@@ -245,7 +255,7 @@ def return_order():
                            font=('Open Sans', 15),
                            # Has to be a lambda function to work
                            command=lambda: reset(order_details)) 
-    cancel_exit_button.grid(row=10, column=0, pady=10, padx=30)
+    cancel_exit_button.grid(row=11, column=0, pady=10, padx=30)
     cancel_exit_button.config(height=2, width=25)
 
 # Function to check which list a pizza is in and return a cost
