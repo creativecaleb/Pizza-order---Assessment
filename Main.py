@@ -62,7 +62,7 @@ def order():
     address_input=tk.Text(window, height=1, width=25)
     address_input.pack(side=TOP, pady=10)
 
-    bottomaddressFrame=Frame(address)
+    bottomaddressFrame=Frame(window)
     bottomaddressFrame.pack(side=BOTTOM)
 
     enter_button=tk.Button(bottomaddressFrame, text='Enter',
@@ -241,9 +241,10 @@ def return_order():
     save_exit_button.grid(row=10, column=0, pady=10, padx=30)
     save_exit_button.config(height=2, width=25)
 
-    cancel_exit_button=Button(order_details, text='Cancel order',
+    cancel_exit_button=tk.Button(order_details, text='Cancel order',
                            font=('Open Sans', 15),
-                           command=reset(order_details))
+                           # Has to be a lambda function to work
+                           command=lambda: reset(order_details)) 
     cancel_exit_button.grid(row=10, column=0, pady=10, padx=30)
     cancel_exit_button.config(height=2, width=25)
 
